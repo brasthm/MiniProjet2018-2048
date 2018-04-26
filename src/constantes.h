@@ -1,5 +1,5 @@
 #ifndef CONSTANTES_H
-#define CONSTATNES_H
+#define CONSTANTES_H
 
 enum Direction {HAUT, BAS, DROITE, GAUCHE};
 
