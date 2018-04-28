@@ -1,8 +1,19 @@
-#include <iostream>
+#include "grille.h"
+
+#include <ctime>
 
 int main()
 {
-	std::cout << "Hello World !" << std::endl;
-	system("pause");
+	srand(time(NULL));
+
+	while (1)
+	{
+		Grille g;
+		g.afficheConsole();
+		system("pause");
+	}
+	
+
+
 	return 0;
 }
