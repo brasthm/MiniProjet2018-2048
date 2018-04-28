@@ -2,6 +2,7 @@
 #define GRILLE_H
 
 #include "constantes.h"
+#include "CImg.h"
 
 #include <ctime>
 #include <vector>
