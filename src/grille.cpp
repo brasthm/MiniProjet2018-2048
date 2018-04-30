@@ -3,7 +3,7 @@
 Grille::Grille()
 {
 	// Position de la grille dans l'ecran
-	pos_x_ = 100;
+	pos_x_ = 200;
 	pos_y_ = 100;
 
 
