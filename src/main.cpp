@@ -1,5 +1,6 @@
 #include "grille.h"
 #include "CImg.h"
+#include "jeu.h"
 
 #include <ctime>
 
@@ -10,6 +11,8 @@ int main()
 	//Code à mettre dans jeu.cpp
 
 	Grille g;
+	Jeu Game;
+	Game.executer();
 
 	g.initTestCouleurs();
 
