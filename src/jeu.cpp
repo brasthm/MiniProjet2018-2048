@@ -8,7 +8,8 @@ Jeu::Jeu() {
 }
 void Jeu::executer()
 {
-	grille_.initTestCouleurs();
+	Grille g;
+	g.initTestCouleurs();
 
 	// Creation de l'image affiché dans la fenetre
 	cimg_library::CImg<unsigned char> scene(ECRAN_W, ECRAN_H, 1, 3, 255);
