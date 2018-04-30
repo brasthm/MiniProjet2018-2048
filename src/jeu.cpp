@@ -1,5 +1,10 @@
-#include "jeu.h"
+#include "Jeu.h"
 
+
+Jeu::Jeu() {
+	score_ = 0;
+	temps_ = 0;
+}
 void Jeu::executer()
 {
 	grille_.initTestCouleurs();
