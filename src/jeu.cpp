@@ -1,4 +1,5 @@
 #include "Jeu.h"
+#include "grille.h"
 
 
 Jeu::Jeu() {
