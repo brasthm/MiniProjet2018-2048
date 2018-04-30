@@ -1,3 +1,6 @@
+#ifndef JEU_H
+#define JEU_H
+
 // CLasse .h
 #include "grille.h"
 class Jeu {
@@ -10,3 +13,5 @@ public:
 	Jeu();
 	void executer();
 };
+
+#endif // !JEU_H
