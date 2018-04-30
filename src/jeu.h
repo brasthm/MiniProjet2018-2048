@@ -7,7 +7,7 @@ class Jeu {
 private:
 	Grille grille_;
 	int score_;
-	Double temps_;
+	double temps_;
 
 public:
 	Jeu();
