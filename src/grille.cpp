@@ -42,13 +42,14 @@ Grille::Grille()
 
 	for (size_t i = 0; i < log2(VALEUR_MAX); i++)
 	{
-		char c[3] = { 200, 200 - 15 * i, 0 };
-		img_blocs_.emplace_back(1, 1, 1, 3, c[0], c[1], c[2]);
+		char c[3] = { 200, 200 - 15 * i, 0 }; //initialisation des couleurs des blocs
+		img_blocs_.emplace_back(1, 1, 1, 3, c[0], c[1], c[2]); //création d'un pixel
 
-		cimg_library::CImg<unsigned char> imgtext;
-		imgtext.draw_text(0, 0, "%d", BLANC, 0, 1, 50, (int)pow(2, i + 1));
+		cimg_library::CImg<unsigned char> imgtext; //création d'un faux texte pour connaitre la largeur du bloc
+		imgtext.draw_text(0, 25, "%d", BLANC, 0, 1, 50, (int)pow(2, i + 1)); // Position du texte à l'intérieur des blocs
 
-		img_blocs_.back().resize(BLOC_W - 1, BLOC_H - 1);
+		img_blocs_.back().resize(BLOC_W - 1, BLOC_H - 1); //Agrandissement de l'image (ajout de pixel) 
+		//recentrage du texte grâce aux infos récoltées
 		img_blocs_.back().draw_text(BLOC_W / 2 - imgtext.width()/2, BLOC_W / 2 - imgtext.height() / 2, "%d", BLANC, c, 1, 50, (int)pow(2, i + 1));
 	}
 }

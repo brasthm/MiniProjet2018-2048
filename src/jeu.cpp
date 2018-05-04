@@ -14,6 +14,7 @@ void Jeu::executer()
 	// Creation de l'image affiché dans la fenetre
 	cimg_library::CImg<unsigned char> scene(ECRAN_W, ECRAN_H, 1, 3, 255);
 
+
 	// Création de la fenetre
 	cimg_library::CImgDisplay disp(ECRAN_W, ECRAN_H, "2048");
 
