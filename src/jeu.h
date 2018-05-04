@@ -4,14 +4,14 @@
 // CLasse .h
 #include "grille.h"
 class Jeu {
-private:
-	Grille grille_;
-	int score_;
-	double temps_;
+	private:
+		Grille grille_;
+		int score_;
+		double temps_;
 
-public:
-	Jeu();
-	void executer();
+	public:
+		Jeu();
+		void executer();
 };
 
 #endif // !JEU_H

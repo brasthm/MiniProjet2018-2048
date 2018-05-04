@@ -8,8 +8,8 @@ Jeu::Jeu() {
 }
 void Jeu::executer()
 {
-	Grille g;
-	g.initTestCouleurs();
+	grille_;
+	grille_.initTestCouleurs();
 
 	// Creation de l'image affiché dans la fenetre
 	cimg_library::CImg<unsigned char> scene(ECRAN_W, ECRAN_H, 1, 3, 255);
@@ -23,7 +23,7 @@ void Jeu::executer()
 
 		// On efface la scene
 		scene.fill(255);
-		g.afficher(scene);
+		grille_.afficher(scene);
 
 		disp.wait();
 		if (disp.is_resized()) disp.resize();
