@@ -20,7 +20,7 @@ class Grille
 		
 	public:
 		Grille();
-		void deplacement(Direction dir);
+		int deplacement(Direction dir);
 		void afficher(cimg_library::CImg<unsigned char> &scene);
 
 		void afficheConsole(); // Fonction de test

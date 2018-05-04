@@ -53,6 +53,42 @@ Grille::Grille()
 	}
 }
 
+int Grille::deplacement(Direction dir)
+{
+	int score = 0;
+	size_t deltaX, deltaY;
+	size_t posX_depart, posX_fin;
+	size_t posY_depart, posY_fin;
+
+	switch (dir)
+	{
+		case HAUT:
+			break;
+		case BAS:
+			break;
+		case DROITE:
+			break;
+		case GAUCHE:
+			break;
+		default:
+			break;
+	}
+
+
+	for (size_t i = posX_depart; i < posX_fin; i++)
+	{
+		for (size_t j = posY_depart; j < posY_fin; j++)
+		{
+			if (grille_[i][j] != 0)
+			{
+
+			}
+		}
+	}
+
+	return score;
+}
+
 void Grille::afficher(cimg_library::CImg<unsigned char>& scene)
 {
 	scene.draw_image(pos_x_, pos_y_, img_grille_);
