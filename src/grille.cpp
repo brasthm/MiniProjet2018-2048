@@ -56,9 +56,6 @@ Grille::Grille()
 int Grille::deplacement(Direction dir)
 {
 	int score = 0;
-	size_t deltaX, deltaY;
-	size_t posX_depart, posX_fin;
-	size_t posY_depart, posY_fin;
 
 	switch (dir)
 	{
@@ -75,13 +72,27 @@ int Grille::deplacement(Direction dir)
 	}
 
 
-	for (size_t i = posX_depart; i < posX_fin; i++)
+	for (size_t i = 1; i < TAILLE; i++)
 	{
-		for (size_t j = posY_depart; j < posY_fin; j++)
+		for (size_t j = 0; j < TAILLE; j++)
 		{
 			if (grille_[i][j] != 0)
 			{
-
+				for (size_t k = 0; k < i; k++)
+				{
+					if (grille_[k][j] == 0)
+					{
+						grille_[k][j] = grille_[i][j];
+						grille_[i][j] = 0;
+						break;
+					}
+					else if (grille_[k][j] == grille_[i][j])
+					{
+						grille_[k][j] = grille_[i][j]+ grille_[i][j];
+						grille_[i][j] = 0;
+						break;
+					}
+				}				
 			}
 		}
 	}
@@ -100,6 +111,24 @@ void Grille::afficher(cimg_library::CImg<unsigned char>& scene)
 			if(grille_[i][j] != 0)
 				scene.draw_image(pos_x_ + i * BLOC_W + 1, pos_y_ + j * BLOC_H + 1, img_blocs_[(int)log2(grille_[i][j]) - 1]);
 		}
+	}
+}
+
+void Grille::create()
+{
+	for (size_t i = 0; i < NB_CASE_INIT; i++)
+	{
+		size_t x, y;
+
+		// Selection d'une case aléatoire VIDE
+		do
+		{
+			x = rand() % TAILLE;
+			y = rand() % TAILLE;
+		} while (grille_[x][y] != 0);
+
+		// Une chance d'avoir un 4 au lien d'un 2
+		grille_[x][y] = rand() % 100 < TAUX_APPARITION_4 ? 4 : 2;
 	}
 }
 

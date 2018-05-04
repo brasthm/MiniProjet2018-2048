@@ -5,6 +5,7 @@
 #include "CImg.h"
 
 #include <ctime>
+#include <cmath>
 #include <vector>
 #include <iostream>
 
@@ -22,6 +23,7 @@ class Grille
 		Grille();
 		int deplacement(Direction dir);
 		void afficher(cimg_library::CImg<unsigned char> &scene);
+		void create();
 
 		void afficheConsole(); // Fonction de test
 		void initTestCouleurs();

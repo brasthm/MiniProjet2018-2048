@@ -9,7 +9,7 @@ Jeu::Jeu() {
 void Jeu::executer()
 {
 	grille_;
-	grille_.initTestCouleurs();
+	//grille_.initTestCouleurs();
 
 	// Creation de l'image affiché dans la fenetre
 	cimg_library::CImg<unsigned char> scene(ECRAN_W, ECRAN_H, 1, 3, 255);
@@ -17,8 +17,15 @@ void Jeu::executer()
 	// Création de la fenetre
 	cimg_library::CImgDisplay disp(ECRAN_W, ECRAN_H, "2048");
 
+	Sleep(1000);
+
 	while (!disp.is_closed())
 	{
+
+		grille_.deplacement(GAUCHE);
+		grille_.create();
+		Sleep(500);
+
 		scene.display(disp);
 
 		// On efface la scene
