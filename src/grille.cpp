@@ -46,7 +46,8 @@ Grille::Grille()
 		img_blocs_.emplace_back(1, 1, 1, 3, c[0], c[1], c[2]); //création d'un pixel
 
 		cimg_library::CImg<unsigned char> imgtext; //création d'un faux texte pour connaitre la largeur du bloc
-		imgtext.draw_text(0, 25, "%d", BLANC, 0, 1, 50, (int)pow(2, i + 1)); // Position du texte à l'intérieur des blocs
+		imgtext.draw_text(0, 0, "%d", BLANC, 0, 1, 50, (int)pow(2, i + 1)); // Position du texte à l'intérieur des blocs
+
 
 		img_blocs_.back().resize(BLOC_W - 1, BLOC_H - 1); //Agrandissement de l'image (ajout de pixel) 
 		//recentrage du texte grâce aux infos récoltées
