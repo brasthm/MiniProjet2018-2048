@@ -44,8 +44,6 @@ void Jeu::executer()
 		{
 			keyboard = false;
 		}
-
-		
 		//_____________________________________________
 
 		// On efface la scene
