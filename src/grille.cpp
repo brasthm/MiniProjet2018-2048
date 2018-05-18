@@ -171,6 +171,8 @@ int Grille::deplacement(Direction dir)
 			break;
 	}
 
+
+	create();
 	return score;
 }
 

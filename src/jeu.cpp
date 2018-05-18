@@ -17,32 +17,34 @@ void Jeu::executer()
 
 	// Création de la fenetre
 	cimg_library::CImgDisplay disp(ECRAN_W, ECRAN_H, "2048");
+	bool keyboard = false;
 
-	Sleep(1000);
+	scene.display(disp);
+	scene.fill(255);
+	grille_.afficher(scene);
 
 	while (!disp.is_closed())
 	{
-
-		grille_.deplacement(BAS);
-		grille_.create();
-		Sleep(500);
-
 		scene.display(disp);
 		//______________________________________________
 		// On fait des tests pour détecter l'appui sur une touche du clavier (ici flèche haut, bas, droite gauche)
 		if (disp.is_keyARROWUP()&& keyboard==false) {
+			score_ += grille_.deplacement(HAUT);
 			std::cout << "Touche haut detectee" << std::endl;
 			keyboard = true;
 		}
 		else if (disp.is_keyARROWDOWN() && keyboard == false) { //l'entrée du clavier est interrogée pour empecher de rester appuyer sur une touche
+			score_ += grille_.deplacement(BAS);
 			std::cout << "Touche Bas detectee" << std::endl;
 			keyboard = true;
 		}
 		else if (disp.is_keyARROWRIGHT() && keyboard == false) {
+			score_ += grille_.deplacement(DROITE);
 			std::cout << "Touche Droite detectee" << std::endl;
 			keyboard = true;
 		}
 		else if (disp.is_keyARROWLEFT() && keyboard == false) {
+			score_ += grille_.deplacement(GAUCHE);
 			std::cout << "Touche Gauche detectee" << std::endl;
 			keyboard = true;
 		}
@@ -57,7 +59,7 @@ void Jeu::executer()
 		scene.fill(255);
 		grille_.afficher(scene);
 
-		//disp.wait();
+		disp.wait();
 		if (disp.is_resized()) disp.resize();
 	}
 	
