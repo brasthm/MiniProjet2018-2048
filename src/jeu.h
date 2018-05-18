@@ -12,6 +12,7 @@ class Jeu {
 	public:
 		Jeu();
 		void executer();
+		void savescore();
 };
 
 #endif // !JEU_H
