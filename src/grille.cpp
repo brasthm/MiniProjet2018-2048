@@ -192,20 +192,33 @@ void Grille::afficher(cimg_library::CImg<unsigned char>& scene)
 
 void Grille::create()
 {
+	check_libre();
 	for (size_t i = 0; i < NB_CASE_INIT; i++)
 	{
-		size_t x, y;
-
-		// Selection d'une case aléatoire VIDE
-		do
+		if (!libres_.empty())
 		{
-			x = rand() % TAILLE;
-			y = rand() % TAILLE;
-		} while (grille_[x][y] != 0);
+			size_t x, y;
 
-		// Une chance d'avoir un 4 au lien d'un 2
-		grille_[x][y] = rand() % 100 < TAUX_APPARITION_4 ? 4 : 2;
+			// Selection d'une case aléatoire VIDE
+			size_t n = rand() % libres_.size();
+			x = libres_[n].first;
+			y = libres_[n].second;
+
+			// Une chance d'avoir un 4 au lien d'un 2
+			grille_[x][y] = rand() % 100 < TAUX_APPARITION_4 ? 4 : 2;
+		}
+		
 	}
+}
+
+void Grille::check_libre()
+{
+	libres_.clear();
+	for (size_t i = 0; i < TAILLE; i++)
+		for (size_t j = 0; j < TAILLE; j++)
+			if (grille_[i][j] == 0)
+				libres_.emplace_back(i, j);
+
 }
 
 void Grille::afficheConsole()
