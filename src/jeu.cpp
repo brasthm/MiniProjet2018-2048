@@ -22,7 +22,7 @@ void Jeu::executer()
 	while (!disp.is_closed())
 	{
 
-		grille_.deplacement(GAUCHE);
+		grille_.deplacement(BAS);
 		grille_.create();
 		Sleep(500);
 
@@ -32,7 +32,7 @@ void Jeu::executer()
 		scene.fill(255);
 		grille_.afficher(scene);
 
-		disp.wait();
+		//disp.wait();
 		if (disp.is_resized()) disp.resize();
 	}
 }

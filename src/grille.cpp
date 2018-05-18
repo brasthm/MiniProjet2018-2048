@@ -60,41 +60,115 @@ int Grille::deplacement(Direction dir)
 	switch (dir)
 	{
 		case HAUT:
+			for (int i = 0; i < TAILLE; i++)
+			{
+				for (int j = 1; j < TAILLE; j++)
+				{
+					if (grille_[i][j] != 0)
+					{
+						for (int k = 0; k < j; k++)
+						{
+							if (grille_[i][k] == 0)
+							{
+								grille_[i][k] = grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+							else if (grille_[i][k] == grille_[i][j])
+							{
+								grille_[i][k] = grille_[i][j] + grille_[i][j];
+								score += grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+						}
+					}
+				}
+			}
 			break;
 		case BAS:
+			for (int i = 0; i < TAILLE; i++)
+			{
+				for (int j = TAILLE - 2; j >= 0; j--)
+				{
+					if (grille_[i][j] != 0)
+					{
+						for (int k = TAILLE - 1; k > j; k--)
+						{
+							if (grille_[i][k] == 0)
+							{
+								grille_[i][k] = grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+							else if (grille_[i][k] == grille_[i][j])
+							{
+								grille_[i][k] = grille_[i][j] + grille_[i][j];
+								score += grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+						}
+					}
+				}
+			}
 			break;
 		case DROITE:
+			for (int i = TAILLE - 2; i >= 0; i--)
+			{
+				for (int j = 0; j < TAILLE; j++)
+				{
+					if (grille_[i][j] != 0)
+					{
+						for (int k = TAILLE - 1; k > i; k--)
+						{
+							if (grille_[k][j] == 0)
+							{
+								grille_[k][j] = grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+							else if (grille_[k][j] == grille_[i][j])
+							{
+								grille_[k][j] = grille_[i][j] + grille_[i][j];
+								score += grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+						}
+					}
+				}
+			}
 			break;
 		case GAUCHE:
+			for (int i = 1; i < TAILLE; i++)
+			{
+				for (int j = 0; j < TAILLE; j++)
+				{
+					if (grille_[i][j] != 0)
+					{
+						for (int k = 0; k < i; k++)
+						{
+							if (grille_[k][j] == 0)
+							{
+								grille_[k][j] = grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+							else if (grille_[k][j] == grille_[i][j])
+							{
+								grille_[k][j] = grille_[i][j] + grille_[i][j];
+								score += grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+						}
+					}
+				}
+			}
 			break;
 		default:
 			break;
-	}
-
-
-	for (size_t i = 1; i < TAILLE; i++)
-	{
-		for (size_t j = 0; j < TAILLE; j++)
-		{
-			if (grille_[i][j] != 0)
-			{
-				for (size_t k = 0; k < i; k++)
-				{
-					if (grille_[k][j] == 0)
-					{
-						grille_[k][j] = grille_[i][j];
-						grille_[i][j] = 0;
-						break;
-					}
-					else if (grille_[k][j] == grille_[i][j])
-					{
-						grille_[k][j] = grille_[i][j]+ grille_[i][j];
-						grille_[i][j] = 0;
-						break;
-					}
-				}				
-			}
-		}
 	}
 
 	return score;
