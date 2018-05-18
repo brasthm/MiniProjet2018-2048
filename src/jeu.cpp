@@ -10,16 +10,23 @@ Jeu::Jeu() {
 void Jeu::executer()
 {
 	grille_;
-	grille_.initTestCouleurs();
+	//grille_.initTestCouleurs();
 
 	// Creation de l'image affiché dans la fenetre
 	cimg_library::CImg<unsigned char> scene(ECRAN_W, ECRAN_H, 1, 3, 255);
 
 	// Création de la fenetre
 	cimg_library::CImgDisplay disp(ECRAN_W, ECRAN_H, "2048");
-	bool keyboard = false;
+
+	Sleep(1000);
+
 	while (!disp.is_closed())
 	{
+
+		grille_.deplacement(BAS);
+		grille_.create();
+		Sleep(500);
+
 		scene.display(disp);
 		//______________________________________________
 		// On fait des tests pour détecter l'appui sur une touche du clavier (ici flèche haut, bas, droite gauche)
@@ -50,9 +57,8 @@ void Jeu::executer()
 		scene.fill(255);
 		grille_.afficher(scene);
 
-		disp.wait();
-		if (disp.is_resized()) 
-			disp.resize();
+		//disp.wait();
+		if (disp.is_resized()) disp.resize();
 	}
 	
 }
