@@ -53,6 +53,129 @@ Grille::Grille()
 	}
 }
 
+int Grille::deplacement(Direction dir)
+{
+	int score = 0;
+
+	switch (dir)
+	{
+		case HAUT:
+			for (int i = 0; i < TAILLE; i++)
+			{
+				for (int j = 1; j < TAILLE; j++)
+				{
+					if (grille_[i][j] != 0)
+					{
+						for (int k = 0; k < j; k++)
+						{
+							if (grille_[i][k] == 0)
+							{
+								grille_[i][k] = grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+							else if (grille_[i][k] == grille_[i][j])
+							{
+								grille_[i][k] = grille_[i][j] + grille_[i][j];
+								score += grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+						}
+					}
+				}
+			}
+			break;
+		case BAS:
+			for (int i = 0; i < TAILLE; i++)
+			{
+				for (int j = TAILLE - 2; j >= 0; j--)
+				{
+					if (grille_[i][j] != 0)
+					{
+						for (int k = TAILLE - 1; k > j; k--)
+						{
+							if (grille_[i][k] == 0)
+							{
+								grille_[i][k] = grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+							else if (grille_[i][k] == grille_[i][j])
+							{
+								grille_[i][k] = grille_[i][j] + grille_[i][j];
+								score += grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+						}
+					}
+				}
+			}
+			break;
+		case DROITE:
+			for (int i = TAILLE - 2; i >= 0; i--)
+			{
+				for (int j = 0; j < TAILLE; j++)
+				{
+					if (grille_[i][j] != 0)
+					{
+						for (int k = TAILLE - 1; k > i; k--)
+						{
+							if (grille_[k][j] == 0)
+							{
+								grille_[k][j] = grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+							else if (grille_[k][j] == grille_[i][j])
+							{
+								grille_[k][j] = grille_[i][j] + grille_[i][j];
+								score += grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+						}
+					}
+				}
+			}
+			break;
+		case GAUCHE:
+			for (int i = 1; i < TAILLE; i++)
+			{
+				for (int j = 0; j < TAILLE; j++)
+				{
+					if (grille_[i][j] != 0)
+					{
+						for (int k = 0; k < i; k++)
+						{
+							if (grille_[k][j] == 0)
+							{
+								grille_[k][j] = grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+							else if (grille_[k][j] == grille_[i][j])
+							{
+								grille_[k][j] = grille_[i][j] + grille_[i][j];
+								score += grille_[i][j];
+								grille_[i][j] = 0;
+								break;
+							}
+						}
+					}
+				}
+			}
+			break;
+		default:
+			break;
+	}
+
+
+	create();
+	return score;
+}
+
 void Grille::afficher(cimg_library::CImg<unsigned char>& scene)
 {
 	scene.draw_image(pos_x_, pos_y_, img_grille_);
@@ -65,6 +188,37 @@ void Grille::afficher(cimg_library::CImg<unsigned char>& scene)
 				scene.draw_image(pos_x_ + i * BLOC_W + 1, pos_y_ + j * BLOC_H + 1, img_blocs_[(int)log2(grille_[i][j]) - 1]);
 		}
 	}
+}
+
+void Grille::create()
+{
+	check_libre();
+	for (size_t i = 0; i < NB_CASE_INIT; i++)
+	{
+		if (!libres_.empty())
+		{
+			size_t x, y;
+
+			// Selection d'une case aléatoire VIDE
+			size_t n = rand() % libres_.size();
+			x = libres_[n].first;
+			y = libres_[n].second;
+
+			// Une chance d'avoir un 4 au lien d'un 2
+			grille_[x][y] = rand() % 100 < TAUX_APPARITION_4 ? 4 : 2;
+		}
+		
+	}
+}
+
+void Grille::check_libre()
+{
+	libres_.clear();
+	for (size_t i = 0; i < TAILLE; i++)
+		for (size_t j = 0; j < TAILLE; j++)
+			if (grille_[i][j] == 0)
+				libres_.emplace_back(i, j);
+
 }
 
 void Grille::afficheConsole()

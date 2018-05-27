@@ -5,6 +5,7 @@
 #include "CImg.h"
 
 #include <ctime>
+#include <cmath>
 #include <vector>
 #include <iostream>
 
@@ -17,11 +18,14 @@ class Grille
 		std::vector<cimg_library::CImg<unsigned char>> img_blocs_;
 
 		std::vector<std::vector<int>> grille_;
+		std::vector<std::pair<int, int>> libres_;
 		
 	public:
 		Grille();
-		void deplacement(Direction dir);
+		int deplacement(Direction dir);
 		void afficher(cimg_library::CImg<unsigned char> &scene);
+		void create();
+		void check_libre();
 
 		void afficheConsole(); // Fonction de test
 		void initTestCouleurs();
