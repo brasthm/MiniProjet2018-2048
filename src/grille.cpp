@@ -53,10 +53,9 @@ Grille::Grille()
 	}
 }
 
-int Grille::deplacement(Direction dir)
+bool Grille::deplacement(Direction dir, int &score)
 {
-	int score = 0;
-
+	bool moved = false;
 	switch (dir)
 	{
 		case HAUT:
@@ -66,21 +65,23 @@ int Grille::deplacement(Direction dir)
 				{
 					if (grille_[i][j] != 0)
 					{
-						for (int k = 0; k < j; k++)
+						for (int k = j - 1; k >= 0; k--)
 						{
 							if (grille_[i][k] == 0)
 							{
-								grille_[i][k] = grille_[i][j];
-								grille_[i][j] = 0;
-								break;
+								grille_[i][k] = grille_[i][k + 1];
+								grille_[i][k + 1] = 0;
+								moved = true;
 							}
-							else if (grille_[i][k] == grille_[i][j])
+							else if (grille_[i][k] == grille_[i][k + 1])
 							{
-								grille_[i][k] = grille_[i][j] + grille_[i][j];
-								score += grille_[i][j];
-								grille_[i][j] = 0;
+								grille_[i][k] = 2 * grille_[i][k + 1];
+								score += grille_[i][k + 1];
+								grille_[i][k + 1] = 0;
+								moved = true;
 								break;
 							}
+							else break;
 						}
 					}
 				}
@@ -93,21 +94,23 @@ int Grille::deplacement(Direction dir)
 				{
 					if (grille_[i][j] != 0)
 					{
-						for (int k = TAILLE - 1; k > j; k--)
+						for (int k = j + 1; k < TAILLE; k++)
 						{
 							if (grille_[i][k] == 0)
 							{
-								grille_[i][k] = grille_[i][j];
-								grille_[i][j] = 0;
-								break;
+								grille_[i][k] = grille_[i][k - 1];
+								grille_[i][k - 1] = 0;
+								moved = true;
 							}
-							else if (grille_[i][k] == grille_[i][j])
+							else if (grille_[i][k] == grille_[i][k - 1])
 							{
-								grille_[i][k] = grille_[i][j] + grille_[i][j];
-								score += grille_[i][j];
-								grille_[i][j] = 0;
+								grille_[i][k] = 2 * grille_[i][k - 1];
+								score += grille_[i][k - 1];
+								grille_[i][k - 1] = 0;
+								moved = true;
 								break;
 							}
+							else break;
 						}
 					}
 				}
@@ -120,21 +123,23 @@ int Grille::deplacement(Direction dir)
 				{
 					if (grille_[i][j] != 0)
 					{
-						for (int k = TAILLE - 1; k > i; k--)
+						for (int k = i + 1; k < TAILLE; k++)
 						{
 							if (grille_[k][j] == 0)
 							{
-								grille_[k][j] = grille_[i][j];
-								grille_[i][j] = 0;
-								break;
+								grille_[k][j] = grille_[k - 1][j];
+								grille_[k - 1][j] = 0;
+								moved = true;
 							}
-							else if (grille_[k][j] == grille_[i][j])
+							else if (grille_[k][j] == grille_[k - 1][j])
 							{
-								grille_[k][j] = grille_[i][j] + grille_[i][j];
-								score += grille_[i][j];
-								grille_[i][j] = 0;
+								grille_[k][j] = 2 * grille_[k - 1][j];
+								score += grille_[k - 1][j];
+								grille_[k - 1][j] = 0;
+								moved = true;
 								break;
 							}
+							else break;
 						}
 					}
 				}
@@ -147,21 +152,23 @@ int Grille::deplacement(Direction dir)
 				{
 					if (grille_[i][j] != 0)
 					{
-						for (int k = 0; k < i; k++)
+						for (int k = i-1; k >= 0; k--)
 						{
 							if (grille_[k][j] == 0)
 							{
-								grille_[k][j] = grille_[i][j];
-								grille_[i][j] = 0;
-								break;
+								grille_[k][j] = grille_[k + 1][j];
+								grille_[k + 1][j] = 0;
+								moved = true;
 							}
-							else if (grille_[k][j] == grille_[i][j])
+							else if (grille_[k][j] == grille_[k + 1][j])
 							{
-								grille_[k][j] = grille_[i][j] + grille_[i][j];
-								score += grille_[i][j];
-								grille_[i][j] = 0;
+								grille_[k][j] = 2 * grille_[k + 1][j];
+								score += grille_[k + 1][j];
+								grille_[k + 1][j] = 0;
+								moved = true;
 								break;
 							}
+							else break;
 						}
 					}
 				}
@@ -171,9 +178,7 @@ int Grille::deplacement(Direction dir)
 			break;
 	}
 
-
-	create();
-	return score;
+	return moved;
 }
 
 void Grille::afficher(cimg_library::CImg<unsigned char>& scene)
@@ -209,6 +214,7 @@ void Grille::create()
 		}
 		
 	}
+	check_libre();
 }
 
 void Grille::check_libre()

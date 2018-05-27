@@ -12,6 +12,7 @@ class Jeu {
 	public:
 		Jeu();
 		void executer();
+		bool testDefaite();
 };
 
 #endif // !JEU_H

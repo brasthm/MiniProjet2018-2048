@@ -29,23 +29,23 @@ void Jeu::executer()
 		//______________________________________________
 		// On fait des tests pour détecter l'appui sur une touche du clavier (ici flèche haut, bas, droite gauche)
 		if (disp.is_keyARROWUP()&& keyboard==false) {
-			score_ += grille_.deplacement(HAUT);
-			std::cout << "Touche haut detectee" << std::endl;
+			grille_.deplacement(HAUT, score_);
+			grille_.create();
 			keyboard = true;
 		}
 		else if (disp.is_keyARROWDOWN() && keyboard == false) { //l'entrée du clavier est interrogée pour empecher de rester appuyer sur une touche
-			score_ += grille_.deplacement(BAS);
-			std::cout << "Touche Bas detectee" << std::endl;
+			grille_.deplacement(BAS, score_);
+			grille_.create();
 			keyboard = true;
 		}
 		else if (disp.is_keyARROWRIGHT() && keyboard == false) {
-			score_ += grille_.deplacement(DROITE);
-			std::cout << "Touche Droite detectee" << std::endl;
+			grille_.deplacement(DROITE, score_);
+			grille_.create();
 			keyboard = true;
 		}
 		else if (disp.is_keyARROWLEFT() && keyboard == false) {
-			score_ += grille_.deplacement(GAUCHE);
-			std::cout << "Touche Gauche detectee" << std::endl;
+			grille_.deplacement(GAUCHE, score_);
+			grille_.create();
 			keyboard = true;
 		}
 		//Si aucune touche n'est enfoncée on repasse l'entrée à 0
@@ -55,13 +55,42 @@ void Jeu::executer()
 		}
 		//_____________________________________________
 
+		if (testDefaite()) std::cout << "Defaite" << std::endl;
+
 		// On efface la scene
 		scene.fill(255);
 		grille_.afficher(scene);
 
-		disp.wait();
+		//disp.wait();
 		if (disp.is_resized()) disp.resize();
 	}
+	
+}
+
+bool Jeu::testDefaite()
+{
+	if (grille_.isLibresEmpty())
+	{
+		int score = 0;
+		Grille temp;
+		bool defaite = true;
+
+		temp = grille_;
+		defaite = defaite && !temp.deplacement(HAUT, score);
+
+		temp = grille_;
+		defaite = defaite && !temp.deplacement(BAS, score);
+
+		temp = grille_;
+		defaite = defaite && !temp.deplacement(DROITE, score);
+
+		temp = grille_;
+		defaite = defaite && !temp.deplacement(GAUCHE, score);
+
+		return defaite;
+	}
+	else return false;
+
 	
 }
 
