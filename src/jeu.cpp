@@ -1,6 +1,10 @@
 #include "Jeu.h"
 #include "grille.h"
+#include <fstream>
 #include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
 
 
 Jeu::Jeu() {
@@ -14,6 +18,8 @@ void Jeu::executer()
 
 	// Creation de l'image affiché dans la fenetre
 	cimg_library::CImg<unsigned char> scene(ECRAN_W, ECRAN_H, 1, 3, 255);
+
+	
 
 	// Création de la fenetre
 	cimg_library::CImgDisplay disp(ECRAN_W, ECRAN_H, "2048");
@@ -60,6 +66,11 @@ void Jeu::executer()
 		// On efface la scene
 		scene.fill(255);
 		grille_.afficher(scene);
+		scene.draw_text(0, 0, "Score : %d", NOIR, 0, 1, 50, score_); // Affichage score
+		
+		
+		
+
 
 		//disp.wait();
 		if (disp.is_resized()) disp.resize();
