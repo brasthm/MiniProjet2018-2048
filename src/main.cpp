@@ -1,8 +1,15 @@
-#include <iostream>
+#include "grille.h"
+#include "CImg.h"
+#include "jeu.h"
+
+#include <ctime>
 
 int main()
 {
-	std::cout << "Hello World !" << std::endl;
-	system("pause");
+	srand(time(NULL));
+
+	Jeu Game;
+	Game.executer();
+
 	return 0;
 }
