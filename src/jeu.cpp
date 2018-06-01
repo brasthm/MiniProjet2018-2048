@@ -31,10 +31,12 @@ void Jeu::executer()
 	cimg_library::CImgDisplay disp(ECRAN_W, ECRAN_H, "2048");
 	bool keyboard = false;
 
+	grille_.loadGame(score_);
+
 	scene.display(disp);
 	scene.fill(255);
 	grille_.afficher(scene);
-	grille_.loadGame(score_);
+	
 	while (!disp.is_closed())
 	{
 		
@@ -70,8 +72,15 @@ void Jeu::executer()
 			grille_.reinitialiserGrille(score_);
 		}
 		//_____________________________________________
-
-		if (testDefaite()) std::cout << "Defaite" << std::endl;
+		
+		if (testDefaite()) {
+			
+			std::cout << "Defaite" << std::endl;
+		
+				endDisplay("Défaite", scene, disp);
+				
+			
+		}
 
 		if (grille_.testVictoire()) std::cout << "Victoire" << std::endl;
 		// On efface la scene
@@ -88,8 +97,6 @@ void Jeu::executer()
 
 		//disp.wait();
 		if (disp.is_resized()) disp.resize();
-		
-
 	}
 	grille_.saveGame(score_);
 	
@@ -134,5 +141,14 @@ bool Jeu::testDefaite()
 	}
 	else return false;
 }
-
+void Jeu::endDisplay(std::string s, cimg_library::CImg<unsigned char> &lastscreen, cimg_library::CImgDisplay &disp) {
+	cimg_library::CImg<unsigned char> scene(ECRAN_W, ECRAN_H, 1, 3, 255); //créationd e l'écran vierge
+	while(!disp.is_keyR())
+	{
+		scene.display(disp);
+		scene.draw_image(lastscreen);
+		scene.draw_rectangle(0, 0, ECRAN_W, ECRAN_H, NOIR, 0.5);
+		scene.draw_text(250, 150, " %s", BLANC, 0, 1, 50, s.c_str());
+	}
+}
 

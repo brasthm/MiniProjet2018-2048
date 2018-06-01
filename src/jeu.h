@@ -22,6 +22,9 @@ class Jeu {
 		void executer();
 		// Verifie si le jouer a perdu
 		bool testDefaite();
+		// Affiche un 
+		void endDisplay(std::string s, cimg_library::CImg<unsigned char> &lastscreen, cimg_library::CImgDisplay &disp)
+;
 		
 };
 
