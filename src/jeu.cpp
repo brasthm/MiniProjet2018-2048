@@ -60,6 +60,9 @@ void Jeu::executer()
 		{
 			keyboard = false;
 		}
+		if (disp.is_keyR()) {
+			grille_.reinitialiserGrille(score_);
+		}
 		//_____________________________________________
 
 		if (testDefaite()) std::cout << "Defaite" << std::endl;
@@ -68,7 +71,7 @@ void Jeu::executer()
 		scene.fill(255);
 		grille_.afficher(scene);
 		scene.draw_text(0, 0, "Score : %d", NOIR, 0, 1, 50, score_); // Affichage score
-		
+		scene.draw_text(0, 520, "Appuyer sur R pour commencer une nouvelle partie", NOIR, 0, 1, 20); // Affichage score
 		
 		
 

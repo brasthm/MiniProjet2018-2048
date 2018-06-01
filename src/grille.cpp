@@ -277,5 +277,18 @@ void Grille::loadGame(int &score) {
 			load >> grille_[j][i];
 		}
 	}
+	check_libre();
+}
+void Grille::reinitialiserGrille(int &score) {
+	for (int i = 0; i < grille_.size(); i++) {
 
+		for (int j = 0; j < grille_[0].size(); j++) {
+			grille_[j][i] = 0;
+		
+			
+		}
+		
+	}
+	score = 0;
+	create();
 }

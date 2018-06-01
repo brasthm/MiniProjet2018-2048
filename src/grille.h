@@ -26,12 +26,12 @@ class Grille
 		void afficher(cimg_library::CImg<unsigned char> &scene);
 		void create();
 		void check_libre();
-
 		void afficheConsole(); // Fonction de test
 		void initTestCouleurs();
 		bool isLibresEmpty() { return libres_.empty(); };
 		void saveGame(int score);
 		void loadGame(int &score);
+		void reinitialiserGrille(int &score);
 };
 
 #endif // !GRILLE_H
