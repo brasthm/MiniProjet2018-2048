@@ -25,33 +25,36 @@ void Jeu::executer()
 	cimg_library::CImgDisplay disp(ECRAN_W, ECRAN_H, "2048");
 	bool keyboard = false;
 
+	//grille_.initTestCouleurs();
+
 	scene.display(disp);
 	scene.fill(255);
 	grille_.afficher(scene);
 
 	while (!disp.is_closed())
 	{
+		bool moved;
 		scene.display(disp);
 		//______________________________________________
 		// On fait des tests pour détecter l'appui sur une touche du clavier (ici flèche haut, bas, droite gauche)
 		if (disp.is_keyARROWUP()&& keyboard==false) {
-			grille_.deplacement(HAUT, score_);
-			grille_.create();
+			moved = grille_.deplacement(HAUT, score_);
+			if(moved) grille_.create();
 			keyboard = true;
 		}
 		else if (disp.is_keyARROWDOWN() && keyboard == false) { //l'entrée du clavier est interrogée pour empecher de rester appuyer sur une touche
-			grille_.deplacement(BAS, score_);
-			grille_.create();
+			moved = grille_.deplacement(BAS, score_);
+			if (moved) grille_.create();
 			keyboard = true;
 		}
 		else if (disp.is_keyARROWRIGHT() && keyboard == false) {
-			grille_.deplacement(DROITE, score_);
-			grille_.create();
+			moved = grille_.deplacement(DROITE, score_);
+			if (moved) grille_.create();
 			keyboard = true;
 		}
 		else if (disp.is_keyARROWLEFT() && keyboard == false) {
-			grille_.deplacement(GAUCHE, score_);
-			grille_.create();
+			moved = grille_.deplacement(GAUCHE, score_);
+			if (moved) grille_.create();
 			keyboard = true;
 		}
 		//Si aucune touche n'est enfoncée on repasse l'entrée à 0
