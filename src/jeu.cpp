@@ -34,9 +34,10 @@ void Jeu::executer()
 	scene.display(disp);
 	scene.fill(255);
 	grille_.afficher(scene);
-
+	grille_.loadGame(score_);
 	while (!disp.is_closed())
 	{
+		
 		scene.display(disp);
 		//______________________________________________
 		// On fait des tests pour détecter l'appui sur une touche du clavier (ici flèche haut, bas, droite gauche)
@@ -65,18 +66,30 @@ void Jeu::executer()
 		{
 			keyboard = false;
 		}
+		if (disp.is_keyR()) {
+			grille_.reinitialiserGrille(score_);
+		}
 		//_____________________________________________
 
 		if (testDefaite()) std::cout << "Defaite" << std::endl;
-
+		if (grille_.testVictoire()) std::cout << "Victoire" << std::endl;
 		// On efface la scene
 		scene.fill(255);
 		grille_.afficher(scene);
 		scene.draw_text(0, 0, "Score : %d", NOIR, 0, 1, 50, score_); // Affichage score
+		scene.draw_text(0, 520, "Appuyer sur R pour commencer une nouvelle partie", NOIR, 0, 1, 20); // Affichage score
+		
+		
+
 
 		//disp.wait();
 		if (disp.is_resized()) disp.resize();
+		
+
 	}
+	grille_.saveGame(score_);
+	
+	
 	
 }
 
@@ -116,7 +129,6 @@ bool Jeu::testDefaite()
 		return defaite;
 	}
 	else return false;
-
-	
 }
+
 

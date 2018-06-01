@@ -22,6 +22,7 @@ class Jeu {
 		void executer();
 		// Verifie si le jouer a perdu
 		bool testDefaite();
+		
 };
 
 #endif // !JEU_H

@@ -1,4 +1,6 @@
 #include "grille.h"
+#include <fstream>
+#include <iostream>
 
 
 /*
@@ -291,4 +293,51 @@ void Grille::check_libre()
 			if (grille_[i][j] == 0)
 				libres_.emplace_back(i, j);
 
+}
+void Grille::saveGame(int score){
+	std::ofstream save("savedgame.txt");
+	save << score << std::endl;
+	for (int i = 0; i < grille_.size(); i++) {
+
+		for (int j = 0; j < grille_[0].size(); j++) {
+			
+			save << grille_[j][i] << " ";
+		}
+		save<<std::endl;
+	}
+}
+void Grille::loadGame(int &score) {
+	std::ifstream load("savedgame.txt");
+	load >> score;
+	for (int i = 0; i < grille_.size(); i++) {
+
+		for (int j = 0; j < grille_[0].size(); j++) {
+
+			load >> grille_[j][i];
+		}
+	}
+	check_libre();
+}
+void Grille::reinitialiserGrille(int &score) {
+	for (int i = 0; i < grille_.size(); i++) {
+
+		for (int j = 0; j < grille_[0].size(); j++) {
+			grille_[j][i] = 0;
+		
+			
+		}
+		
+	}
+	score = 0;
+	create();
+}
+bool Grille::testVictoire() {
+	for (int i = 0; i < grille_.size(); i++) {
+
+		for (int j = 0; j < grille_[0].size(); j++) {
+			if (grille_[j][i] == 2048)
+				return true;
+		}
+	}
+	return false;
 }
