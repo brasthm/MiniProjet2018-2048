@@ -6,20 +6,26 @@
 #include <algorithm>
 #include <string>
 
-
+/*
+Auteur : Cyril Li
+Description : Contructeur du jeu
+Paramètres : /
+Retour : /
+*/
 Jeu::Jeu() {
 	score_ = 0;
-	temps_ = 0;
 }
+
+/*
+Auteur : Adrien Lebron
+Description : Executer la boucle de jeu
+Paramètres : /
+Retour : /
+*/
 void Jeu::executer()
 {
-	grille_;
-	//grille_.initTestCouleurs();
-
 	// Creation de l'image affiché dans la fenetre
 	cimg_library::CImg<unsigned char> scene(ECRAN_W, ECRAN_H, 1, 3, 255);
-
-	
 
 	// Création de la fenetre
 	cimg_library::CImgDisplay disp(ECRAN_W, ECRAN_H, "2048");
@@ -91,13 +97,26 @@ void Jeu::executer()
 	
 }
 
+/*
+Auteur : Adrien Lebron
+Description : Determine si le joueur a perdu
+Paramètres : /
+Retour : Vrai si le joueur a perdu, faux sinon
+*/
 bool Jeu::testDefaite()
 {
+	// Si il n'y a plus de de cases libre
 	if (grille_.isLibresEmpty())
 	{
+		// Score tampon
 		int score = 0;
+		// Grille temporaire
 		Grille temp;
 		bool defaite = true;
+
+		// On teste le déplacement sur la grille temporaire : si on arrive à bouger, defaite passe à False
+		// Si on n'arrive pas à bouger dans les 4 direction, defaite reste à Vrai et on a détecter la victoire
+
 
 		temp = grille_;
 		defaite = defaite && !temp.deplacement(HAUT, score);
