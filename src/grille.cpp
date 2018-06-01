@@ -1,5 +1,12 @@
 #include "grille.h"
 
+
+/*
+	Auteur : Cyril Li
+	Description : Contructeur de la grille
+	Paramètres : /
+	Retour : /
+*/
 Grille::Grille()
 {
 	// Position de la grille dans l'ecran
@@ -17,6 +24,7 @@ Grille::Grille()
 			grille_.back().push_back(0);
 	}
 
+	// Placement des blocs de départ
 	for (size_t i = 0; i < NB_CASE_INIT; i++)
 	{
 		size_t x, y;
@@ -45,7 +53,7 @@ Grille::Grille()
 		char c[3] = { 200, 200 - 15 * i, 0 }; //initialisation des couleurs des blocs
 		img_blocs_.emplace_back(1, 1, 1, 3, c[0], c[1], c[2]); //création d'un pixel
 
-		cimg_library::CImg<unsigned char> imgtext; //création d'un faux texte pour connaitre la largeur du bloc
+		cimg_library::CImg<unsigned char> imgtext; //création d'un texte tampon pour connaitre la largeur du bloc
 		imgtext.draw_text(0, 0, "%d", BLANC, 0, 1, 50, (int)pow(2, i + 1)); // Position du texte à l'intérieur des blocs
 
 
@@ -55,40 +63,62 @@ Grille::Grille()
 	}
 }
 
+/*
+Auteur : Cyril Li
+Description : Gere le déplacement des blocs
+Paramètres : dir -> Direction du déplacement
+			 score -> Score actuel
+Retour : Vrai si on a déplacé une case, faux sinon
+*/
 bool Grille::deplacement(Direction dir, int &score)
 {
+	// Boléen indiquant si on on a bougé une case
 	bool moved = false;
+
+	// Test de la direction
 	switch (dir)
 	{
+		// Déplacement vers le haut
 		case HAUT:
+			// Parcours de toutes les lignes
 			for (int i = 0; i < TAILLE; i++)
 			{
+				// Parcours de toutes les colones (sauf la première)
 				for (int j = 1; j < TAILLE; j++)
 				{
+					// Si la case n'est pas vide
 					if (grille_[i][j] != 0)
 					{
+						// Parcours de la case du dessus jusqu'au bord supérieur
 						for (int k = j - 1; k >= 0; k--)
 						{
+							// Si la case est vide
 							if (grille_[i][k] == 0)
 							{
+								// Déplacement
 								grille_[i][k] = grille_[i][k + 1];
 								grille_[i][k + 1] = 0;
 								moved = true;
 							}
+							// Si la case a une valeur identique à la case de départ
 							else if (grille_[i][k] == grille_[i][k + 1])
 							{
+								// Addition des scores
 								grille_[i][k] = 2 * grille_[i][k + 1];
 								score += grille_[i][k + 1];
 								grille_[i][k + 1] = 0;
 								moved = true;
+								// On a termier le déplacement de cette case
 								break;
 							}
+							// Sinon, on a une case d'une valeur différente : on ne bouge plus la case
 							else break;
 						}
 					}
 				}
 			}
 			break;
+		// Déplacement vers le bas
 		case BAS:
 			for (int i = 0; i < TAILLE; i++)
 			{
@@ -118,6 +148,7 @@ bool Grille::deplacement(Direction dir, int &score)
 				}
 			}
 			break;
+		// Déplacement vers le droite
 		case DROITE:
 			for (int i = TAILLE - 2; i >= 0; i--)
 			{
@@ -147,6 +178,7 @@ bool Grille::deplacement(Direction dir, int &score)
 				}
 			}
 			break;
+		// Déplacement vers la gauche
 		case GAUCHE:
 			for (int i = 1; i < TAILLE; i++)
 			{
@@ -183,25 +215,45 @@ bool Grille::deplacement(Direction dir, int &score)
 	return moved;
 }
 
+/*
+Auteur : Cyril Li
+Description : Affiche la grille
+Paramètres : score -> Score actuel
+Retour : /
+*/
 void Grille::afficher(cimg_library::CImg<unsigned char>& scene)
 {
+	// Affichage de la grille
 	scene.draw_image(pos_x_, pos_y_, img_grille_);
 
+	// Parcours de la grile
 	for (size_t i = 0; i < TAILLE; i++)
 	{
 		for (size_t j = 0; j < TAILLE; j++)
 		{
+			// Si la case n'est pas vide
 			if(grille_[i][j] != 0)
+				// Affichage à la bonne position du bloc correscpondant
 				scene.draw_image(pos_x_ + i * BLOC_W + 1, pos_y_ + j * BLOC_H + 1, img_blocs_[(int)log2(grille_[i][j]) - 1]);
 		}
 	}
 }
 
+/*
+Auteur : Cyril Li
+Description : Création de blocs à des emplacements aléatoire
+Paramètres : /
+Retour : /
+*/
 void Grille::create()
 {
+	// Mise à jour des emplacement libres
 	check_libre();
+
+	// On répete un nombre de fois choisi
 	for (size_t i = 0; i < NB_CASE_INIT; i++)
 	{
+		// S'il reste des emplacements vide
 		if (!libres_.empty())
 		{
 			size_t x, y;
@@ -216,40 +268,27 @@ void Grille::create()
 		}
 		
 	}
+
+	// Mise à jour des emplacement libres
 	check_libre();
 }
 
+/*
+Auteur : Cyril Li
+Description : Met à jour le vecteur des cases vide
+Paramètres : /
+Retour : /
+*/
 void Grille::check_libre()
 {
+	// On efface le vecteur
 	libres_.clear();
+
+	// Parcours de la grille
 	for (size_t i = 0; i < TAILLE; i++)
 		for (size_t j = 0; j < TAILLE; j++)
+			// Si on a une case vide,  on rajoute la case dans le vecteur des emplacements libres
 			if (grille_[i][j] == 0)
 				libres_.emplace_back(i, j);
 
-}
-
-void Grille::afficheConsole()
-{
-	for (size_t i = 0; i < TAILLE; i++)
-	{
-		for (size_t j = 0; j < TAILLE; j++)
-			std::cout << grille_[i][j] << " ";
-		std::cout << std::endl;
-	}
-}
-
-void Grille::initTestCouleurs()
-{
-	grille_[0][0] = 2;
-	grille_[0][1] = 4;
-	grille_[0][2] = 8;
-	grille_[0][3] = 16;
-	grille_[1][0] = 32;
-	grille_[1][1] = 64;
-	grille_[1][2] = 128;
-	grille_[1][3] = 256;
-	grille_[2][0] = 512;
-	grille_[2][1] = 1024;
-	grille_[2][2] = 2048;
 }
