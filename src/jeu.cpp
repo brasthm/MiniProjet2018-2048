@@ -66,13 +66,17 @@ void Jeu::executer()
 		//_____________________________________________
 
 		if (testDefaite()) std::cout << "Defaite" << std::endl;
+
 		if (grille_.testVictoire()) std::cout << "Victoire" << std::endl;
 		// On efface la scene
 		scene.fill(255);
 		grille_.afficher(scene);
+		int highscore;
+		std::ifstream high("highscore.txt");
+		high >> highscore;
 		scene.draw_text(0, 0, "Score : %d", NOIR, 0, 1, 50, score_); // Affichage score
 		scene.draw_text(0, 520, "Appuyer sur R pour commencer une nouvelle partie", NOIR, 0, 1, 20); // Affichage score
-		
+		scene.draw_text(530, 0, "Highscore : %d", NOIR, 0, 1, 40,highscore); // Affichage score
 		
 
 
