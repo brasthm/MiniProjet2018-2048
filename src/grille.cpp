@@ -1,4 +1,6 @@
 #include "grille.h"
+#include <fstream>
+#include <iostream>
 
 Grille::Grille()
 {
@@ -252,4 +254,28 @@ void Grille::initTestCouleurs()
 	grille_[2][0] = 512;
 	grille_[2][1] = 1024;
 	grille_[2][2] = 2048;
+}
+void Grille::saveGame(int score){
+	std::ofstream save("savedgame.txt");
+	save << score << std::endl;
+	for (int i = 0; i < grille_.size(); i++) {
+
+		for (int j = 0; j < grille_[0].size(); j++) {
+			
+			save << grille_[j][i] << " ";
+		}
+		save<<std::endl;
+	}
+}
+void Grille::loadGame(int &score) {
+	std::ifstream load("savedgame.txt");
+	load >> score;
+	for (int i = 0; i < grille_.size(); i++) {
+
+		for (int j = 0; j < grille_[0].size(); j++) {
+
+			load >> grille_[j][i];
+		}
+	}
+
 }

@@ -30,6 +30,8 @@ class Grille
 		void afficheConsole(); // Fonction de test
 		void initTestCouleurs();
 		bool isLibresEmpty() { return libres_.empty(); };
+		void saveGame(int score);
+		void loadGame(int &score);
 };
 
 #endif // !GRILLE_H

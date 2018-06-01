@@ -28,9 +28,10 @@ void Jeu::executer()
 	scene.display(disp);
 	scene.fill(255);
 	grille_.afficher(scene);
-
+	grille_.loadGame(score_);
 	while (!disp.is_closed())
 	{
+		
 		scene.display(disp);
 		//______________________________________________
 		// On fait des tests pour détecter l'appui sur une touche du clavier (ici flèche haut, bas, droite gauche)
@@ -74,7 +75,12 @@ void Jeu::executer()
 
 		//disp.wait();
 		if (disp.is_resized()) disp.resize();
+		
+
 	}
+	grille_.saveGame(score_);
+	
+	
 	
 }
 
@@ -101,7 +107,5 @@ bool Jeu::testDefaite()
 		return defaite;
 	}
 	else return false;
-
-	
 }
 
