@@ -13,6 +13,7 @@ class Jeu {
 		Jeu();
 		void executer();
 		bool testDefaite();
+		
 };
 
 #endif // !JEU_H

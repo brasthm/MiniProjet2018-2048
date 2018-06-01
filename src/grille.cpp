@@ -292,3 +292,13 @@ void Grille::reinitialiserGrille(int &score) {
 	score = 0;
 	create();
 }
+bool Grille::testVictoire() {
+	for (int i = 0; i < grille_.size(); i++) {
+
+		for (int j = 0; j < grille_[0].size(); j++) {
+			if (grille_[j][i] == 2048)
+				return true;
+		}
+	}
+	return false;
+}

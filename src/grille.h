@@ -32,6 +32,7 @@ class Grille
 		void saveGame(int score);
 		void loadGame(int &score);
 		void reinitialiserGrille(int &score);
+		bool testVictoire();
 };
 
 #endif // !GRILLE_H

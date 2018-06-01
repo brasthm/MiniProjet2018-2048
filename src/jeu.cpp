@@ -66,7 +66,7 @@ void Jeu::executer()
 		//_____________________________________________
 
 		if (testDefaite()) std::cout << "Defaite" << std::endl;
-
+		if (grille_.testVictoire()) std::cout << "Victoire" << std::endl;
 		// On efface la scene
 		scene.fill(255);
 		grille_.afficher(scene);
@@ -111,4 +111,5 @@ bool Jeu::testDefaite()
 	}
 	else return false;
 }
+
 
