@@ -40,13 +40,16 @@ class Grille
 		void create();
 		// Recherche toute les instersections libles
 		void check_libre();
+		// Enregistre la partie à la fermeture de la fenêtre
 		void saveGame(int score);
+		// Chargement de la partie précedente
 		void loadGame(int &score);
+		// Réinitialise la grille pour une nouvelle partie
 		void reinitialiserGrille(int &score);
+		//Teste la victoire(affichage d'une case à 2048)
 		bool testVictoire();
 		// Teste si il reste des case libres
 		// Retourne Vrai s'il n'y a plus de de case libre, Retourne Faux sinon
-		// Auteur : Cyril Li
 		bool isLibresEmpty() { return libres_.empty(); };
 
 		

@@ -25,11 +25,15 @@ class Jeu {
 		bool testDefaite();
 		// Affiche un 
 		bool endDisplay(std::string s, cimg_library::CImg<unsigned char> &lastscreen, cimg_library::CImgDisplay &disp);
-
+		// Sauvegarde le score
 		void saveScore();
+		// Lis les plus gros scores dans un fichier txt
 		void readHighscore();
+		// Initialise une partie
 		void init();
+		// Ecris les meilleurs scores à la fin d'une partie
 		void drawHighscore(cimg_library::CImg<unsigned char> &scene);
+		//Récupère les meilleurs score et les stocke dans un vector
 		void getScoreList(std::vector<int> &highscore);
 		
 };
