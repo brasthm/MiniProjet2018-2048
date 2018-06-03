@@ -91,7 +91,7 @@ Grille::Grille()
 	for (size_t i = 0; i < log2(VALEUR_MAX); i++)
 	{
 		char c[3]; //initialisation des couleurs des blocs
-		HSV2RGB(c, 2*i*360./log2(VALEUR_MAX), 1, 0.7);
+		HSV2RGB(c, 2*i*360./log2(VALEUR_MAX), 1, 0.7); //color
 		img_blocs_.emplace_back(1, 1, 1, 3, c[0], c[1], c[2]); //création d'un pixel
 
 		cimg_library::CImg<unsigned char> imgtext; //création d'un texte tampon pour connaitre la largeur du bloc
@@ -189,7 +189,7 @@ bool Grille::deplacement(Direction dir, int &score)
 				}
 			}
 			break;
-		// Déplacement vers le droite
+		// Déplacement vers la droite
 		case DROITE:
 			for (int i = TAILLE - 2; i >= 0; i--)
 			{
@@ -333,41 +333,65 @@ void Grille::check_libre()
 				libres_.emplace_back(i, j);
 
 }
+/*
+Auteur : Adrien Lebron
+Description : Sauvegarde la partie dans un fichier texte 
+Paramètres : Score de la partie
+Retour : /
+*/
 void Grille::saveGame(int score){
-	std::ofstream save("savedgame.txt");
-	save << score << std::endl;
+	std::ofstream save("savedgame.txt"); //Ouverture du fichier txt
+	save << score << std::endl; //Ecriture du score sur la première ligne
 	for (int i = 0; i < grille_.size(); i++) {
 
-		for (int j = 0; j < grille_[0].size(); j++) {
+		for (int j = 0; j < grille_[0].size(); j++) { //Parcours de la grille
 			
-			save << grille_[j][i] << " ";
+			save << grille_[j][i] << " ";// Sauvegarde d'une ligne entière
 		}
 		save<<std::endl;
 	}
 }
+/*
+Auteur : Adrien Lebron
+Description : Charge une partie sauvegardé
+Paramètres : Le score
+Retour : /
+*/
 void Grille::loadGame(int &score) {
-	std::ifstream load("savedgame.txt");
-	load >> score;
+	std::ifstream load("savedgame.txt"); //Ouvre le fichier de sauvegarde
+	load >> score; // Récupère le score
 	for (int i = 0; i < grille_.size(); i++) {
 		for (int j = 0; j < grille_[0].size(); j++) {
-			load >> grille_[j][i];
+			load >> grille_[j][i]; //Récupère une à une les cases de la grille et leurs valeurs
 		}
 	}
-	check_libre();
+	check_libre(); //Va ajourner le vecteur des cases libres
 }
+/*
+Auteur : Adrien Lebron
+Description : Réinitialise la grille pour démarer une nouvelle partie
+Paramètres : /
+Retour : /
+*/
 void Grille::reinitialiserGrille(int &score) {
 	for (int i = 0; i < grille_.size(); i++) {
-		for (int j = 0; j < grille_[0].size(); j++) {
-			grille_[j][i] = 0;			
+		for (int j = 0; j < grille_[0].size(); j++) { //Parcours de la grille
+			grille_[j][i] = 0;			// REmise à 0
 		}
 	}
 	score = 0;
-	create();
+	create(); // Met deux cases à 2 ou 4 aléatoirement
 }
+/*
+Auteur : Adrien Lebron
+Description : Teste la victoire (affichage d'une case à 2048)
+Paramètres : /
+Retour : Booléen à vrai si le joueur a gagné, faux sinon
+*/
 bool Grille::testVictoire() {
 	for (int i = 0; i < grille_.size(); i++) {
-		for (int j = 0; j < grille_[0].size(); j++) {
-			if (grille_[j][i] == 2048)
+		for (int j = 0; j < grille_[0].size(); j++) {//Parcours de la grille
+			if (grille_[j][i] == 2048) //Test sur chaque case
 				return true;
 		}
 	}
