@@ -349,9 +349,7 @@ void Grille::loadGame(int &score) {
 	std::ifstream load("savedgame.txt");
 	load >> score;
 	for (int i = 0; i < grille_.size(); i++) {
-
 		for (int j = 0; j < grille_[0].size(); j++) {
-
 			load >> grille_[j][i];
 		}
 	}
@@ -359,20 +357,15 @@ void Grille::loadGame(int &score) {
 }
 void Grille::reinitialiserGrille(int &score) {
 	for (int i = 0; i < grille_.size(); i++) {
-
 		for (int j = 0; j < grille_[0].size(); j++) {
-			grille_[j][i] = 0;
-		
-			
+			grille_[j][i] = 0;			
 		}
-		
 	}
 	score = 0;
 	create();
 }
 bool Grille::testVictoire() {
 	for (int i = 0; i < grille_.size(); i++) {
-
 		for (int j = 0; j < grille_[0].size(); j++) {
 			if (grille_[j][i] == 2048)
 				return true;
