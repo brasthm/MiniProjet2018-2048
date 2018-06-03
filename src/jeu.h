@@ -14,6 +14,7 @@ class Jeu {
 		Grille grille_;
 		// Score actuel
 		int score_;
+		int highscore_;
 
 	public:
 		// Constructeur par défault
@@ -23,8 +24,13 @@ class Jeu {
 		// Verifie si le jouer a perdu
 		bool testDefaite();
 		// Affiche un 
-		void endDisplay(std::string s, cimg_library::CImg<unsigned char> &lastscreen, cimg_library::CImgDisplay &disp)
-;
+		bool endDisplay(std::string s, cimg_library::CImg<unsigned char> &lastscreen, cimg_library::CImgDisplay &disp);
+
+		void saveScore();
+		void readHighscore();
+		void init();
+		void drawHighscore(cimg_library::CImg<unsigned char> &scene);
+		void getScoreList(std::vector<int> &highscore);
 		
 };
 

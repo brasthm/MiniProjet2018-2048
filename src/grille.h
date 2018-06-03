@@ -40,8 +40,6 @@ class Grille
 		void create();
 		// Recherche toute les instersections libles
 		void check_libre();
-		void afficheConsole(); // Fonction de test
-		void initTestCouleurs();
 		void saveGame(int score);
 		void loadGame(int &score);
 		void reinitialiserGrille(int &score);

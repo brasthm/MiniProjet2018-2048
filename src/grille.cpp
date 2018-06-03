@@ -2,13 +2,51 @@
 #include <fstream>
 #include <iostream>
 
+void HSV2RGB(char *c, float c1, float c2, float c3)
+{
+	int mod = (int)floor(c1 / 60) % 6;
 
-/*
-	Auteur : Cyril Li
-	Description : Contructeur de la grille
-	Paramètres : /
-	Retour : /
-*/
+	float f = c1/60. - mod;
+
+	float l = c3 * (1 - c2);
+	float m = c3 * (1 - f*c2);
+	float n = c3 * (1 - (1-f)*c2);
+
+	switch (mod)
+	{
+		case 0:
+			c[0] = c3 * 256;
+			c[1] = n * 256;
+			c[2] = l * 256;
+			break;
+		case 1:
+			c[0] = m * 256;
+			c[1] = c3 * 256;
+			c[2] = l * 256;
+			break;
+		case 2:
+			c[0] = l * 256;
+			c[1] = c3 * 256;
+			c[2] = n * 256;
+			break;
+		case 3:
+			c[0] = l * 256;
+			c[1] = m * 256;
+			c[2] = c3 * 256;
+			break;
+		case 4:
+			c[0] = n * 256;
+			c[1] = l * 256;
+			c[2] = c3 * 256;
+			break;
+		case 5:
+			c[0] = c3 * 256;
+			c[1] = l * 256;
+			c[2] = m * 256;
+			break;
+	}
+}
+
 Grille::Grille()
 {
 	// Position de la grille dans l'ecran
@@ -52,7 +90,8 @@ Grille::Grille()
 
 	for (size_t i = 0; i < log2(VALEUR_MAX); i++)
 	{
-		char c[3] = { 200, 200 - 15 * i, 0 }; //initialisation des couleurs des blocs
+		char c[3]; //initialisation des couleurs des blocs
+		HSV2RGB(c, 2*i*360./log2(VALEUR_MAX), 1, 0.7);
 		img_blocs_.emplace_back(1, 1, 1, 3, c[0], c[1], c[2]); //création d'un pixel
 
 		cimg_library::CImg<unsigned char> imgtext; //création d'un texte tampon pour connaitre la largeur du bloc
@@ -310,9 +349,7 @@ void Grille::loadGame(int &score) {
 	std::ifstream load("savedgame.txt");
 	load >> score;
 	for (int i = 0; i < grille_.size(); i++) {
-
 		for (int j = 0; j < grille_[0].size(); j++) {
-
 			load >> grille_[j][i];
 		}
 	}
@@ -320,20 +357,15 @@ void Grille::loadGame(int &score) {
 }
 void Grille::reinitialiserGrille(int &score) {
 	for (int i = 0; i < grille_.size(); i++) {
-
 		for (int j = 0; j < grille_[0].size(); j++) {
-			grille_[j][i] = 0;
-		
-			
+			grille_[j][i] = 0;			
 		}
-		
 	}
 	score = 0;
 	create();
 }
 bool Grille::testVictoire() {
 	for (int i = 0; i < grille_.size(); i++) {
-
 		for (int j = 0; j < grille_[0].size(); j++) {
 			if (grille_[j][i] == 2048)
 				return true;
