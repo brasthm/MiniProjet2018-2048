@@ -140,24 +140,29 @@ bool Jeu::testDefaite()
 	}
 	else return false;
 }
-
+/*
+Auteur : Adrien Lebron
+Description : Création de l'affichage de fin de partie
+Paramètres : String avec le message Victoire ou défait à afficher, le dernier écran (la grille) et notre affichage
+Retour : /
+*/
 
 bool Jeu::endDisplay(std::string s, cimg_library::CImg<unsigned char> &lastscreen, cimg_library::CImgDisplay &disp) {
 	cimg_library::CImg<unsigned char> scene(ECRAN_W, ECRAN_H, 1, 3, 255); //créationd e l'écran vierge
 
 	cimg_library::CImg<unsigned char> imgtext; //création d'un texte tampon pour connaitre la largeur du bloc
 	
-	scene.draw_image(lastscreen);
-	scene.draw_rectangle(0, 0, ECRAN_W, ECRAN_H, NOIR, 0.5);
+	scene.draw_image(lastscreen); //Récupération de l'ancien écran
+	scene.draw_rectangle(0, 0, ECRAN_W, ECRAN_H, NOIR, 0.5); // Dessin d'un rectangle par dessus
 
 	imgtext.draw_text(0, 0, "%s", BLANC, 0, 1, 75, s.c_str());
-	scene.draw_text((ECRAN_W - imgtext.width()) / 2, 10, "%s", BLANC, 0, 1, 75, s.c_str());
+	scene.draw_text((ECRAN_W - imgtext.width()) / 2, 10, "%s", BLANC, 0, 1, 75, s.c_str()); // Affichage victoire ou défaite
 
 	imgtext.clear();
 	imgtext.draw_text(0, 0, "Score : %d", BLANC, 0, 1, 75, score_);
-	scene.draw_text((ECRAN_W - imgtext.width()) / 2, 200, "Score : %d", BLANC, 0, 1, 75, score_);
+	scene.draw_text((ECRAN_W - imgtext.width()) / 2, 200, "Score : %d", BLANC, 0, 1, 75, score_);// Affichage score
 
-	scene.draw_text(0, 580, "Appuyer sur R pour commencer une nouvelle partie", BLANC, 0, 1, 20); // Affichage score
+	scene.draw_text(0, 580, "Appuyer sur R pour commencer une nouvelle partie", BLANC, 0, 1, 20); // Affichage Reset
 
 	drawHighscore(scene);
 
@@ -171,7 +176,12 @@ bool Jeu::endDisplay(std::string s, cimg_library::CImg<unsigned char> &lastscree
 		disp.wait();
 	}
 }
-
+/*
+Auteur : Adrien Lebron
+Description : Récupération des highscore dans un fichier txt
+Paramètres : Vecteur d'entier contenant les scores
+Retour : /
+*/
 void Jeu::getScoreList(std::vector<int> &highscore)
 {
 	std::ifstream resultat("highscore.txt"); //Récupération de l'ancien fichier d'highscore
@@ -185,31 +195,36 @@ void Jeu::getScoreList(std::vector<int> &highscore)
 		}
 
 		highscore.push_back(score_);//ajout à la fin du dernier score enregistrée
-		std::sort(highscore.rbegin(), highscore.rend());
+		std::sort(highscore.rbegin(), highscore.rend()); // Tri par ordre décroissant
 
 		resultat.close();
 	}
 }
-
+/*
+Auteur : Adrien Lebron
+Description : Sauvegarde du score dans le fichier txt
+Paramètres : /
+Retour : /
+*/
 void Jeu::saveScore()
 {
 	if (score_ != 0)
 	{
 		std::vector <int> highscore;
-		getScoreList(highscore);
+		getScoreList(highscore); // Récupération des highscore
 
 		std::ofstream flux("highscore.txt", std::ios::out | std::ios::trunc);
 		for (int i = 0; i < highscore.size(); i++) {
-			flux << highscore[i] << std::endl;
+			flux << highscore[i] << std::endl; //Ecriture des scores dans le fichier
 		}
 	}
 }
-
+//Je sais pas, j'ai l'impression que ya doublon
 void Jeu::readHighscore()
 {
 	std::ifstream high;
 
-	high.open("highscore.txt", std::ios::in);
+	high.open("highscore.txt", std::ios::in); //Ouverture des highscore
 
 	while (!high)
 	{
@@ -223,14 +238,24 @@ void Jeu::readHighscore()
 	high.close();
 
 }
-
+/*
+Auteur : Adrien Lebron
+Description : Initialisation d'une partie
+Paramètres : /
+Retour : /
+*/
 void Jeu::init()
 {
-	saveScore();
-	grille_.reinitialiserGrille(score_);
+	saveScore(); //Sauvegarde le score
+	grille_.reinitialiserGrille(score_); //Relance la grille à 0
 	readHighscore();
 }
-
+/*
+Auteur : Adrien Lebron
+Description : Dessine les scores en fin de partie
+Paramètres : La scène actuelle
+Retour : /
+*/
 
 void Jeu::drawHighscore(cimg_library::CImg<unsigned char> &scene)
 {
@@ -243,7 +268,7 @@ void Jeu::drawHighscore(cimg_library::CImg<unsigned char> &scene)
 	while (i < 3 && i < highscore.size())
 	{
 		imgtext.clear();
-		imgtext.draw_text(0, 0, "%d - %d", BLANC, 0, 1, 75, i+1, highscore[i]);
+		imgtext.draw_text(0, 0, "%d - %d", BLANC, 0, 1, 75, i+1, highscore[i]);// Affichage score
 		scene.draw_text((ECRAN_W - imgtext.width()) / 2, 300 + 75*i, "%d - %d", BLANC, 0, 1, 75, i + 1, highscore[i]);
 		i++;
 	}
