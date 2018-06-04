@@ -146,7 +146,7 @@ bool Grille::deplacement(Direction dir, int &score)
 							{
 								// Addition des scores
 								grille_[i][k] = 2 * grille_[i][k + 1];
-								score += grille_[i][k + 1];
+								score += 2*grille_[i][k + 1];
 								grille_[i][k + 1] = 0;
 								moved = true;
 								// On a termier le déplacement de cette case
@@ -178,7 +178,7 @@ bool Grille::deplacement(Direction dir, int &score)
 							else if (grille_[i][k] == grille_[i][k - 1])
 							{
 								grille_[i][k] = 2 * grille_[i][k - 1];
-								score += grille_[i][k - 1];
+								score += 2*grille_[i][k - 1];
 								grille_[i][k - 1] = 0;
 								moved = true;
 								break;
@@ -208,7 +208,7 @@ bool Grille::deplacement(Direction dir, int &score)
 							else if (grille_[k][j] == grille_[k - 1][j])
 							{
 								grille_[k][j] = 2 * grille_[k - 1][j];
-								score += grille_[k - 1][j];
+								score += 2*grille_[k - 1][j];
 								grille_[k - 1][j] = 0;
 								moved = true;
 								break;
@@ -238,7 +238,7 @@ bool Grille::deplacement(Direction dir, int &score)
 							else if (grille_[k][j] == grille_[k + 1][j])
 							{
 								grille_[k][j] = 2 * grille_[k + 1][j];
-								score += grille_[k + 1][j];
+								score += 2*grille_[k + 1][j];
 								grille_[k + 1][j] = 0;
 								moved = true;
 								break;
