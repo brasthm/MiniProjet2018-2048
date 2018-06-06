@@ -291,9 +291,6 @@ void Grille::create()
 	// Mise à jour des emplacement libres
 	check_libre();
 
-	// On répete un nombre de fois choisi
-	for (size_t i = 0; i < NB_CASE_INIT; i++)
-	{
 		// S'il reste des emplacements vide
 		if (!libres_.empty())
 		{
@@ -308,7 +305,7 @@ void Grille::create()
 			grille_[x][y] = rand() % 100 < TAUX_APPARITION_4 ? 4 : 2;
 		}
 		
-	}
+	
 
 	// Mise à jour des emplacement libres
 	check_libre();
@@ -380,7 +377,8 @@ void Grille::reinitialiserGrille(int &score) {
 		}
 	}
 	score = 0;
-	create(); // Met deux cases à 2 ou 4 aléatoirement
+	create();
+	create();// Met deux cases à 2 ou 4 aléatoirement
 }
 /*
 Auteur : Adrien Lebron
