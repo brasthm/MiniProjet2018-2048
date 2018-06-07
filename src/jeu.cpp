@@ -38,6 +38,7 @@ void Jeu::executer()
 	init();
 	grille_.loadGame(score_);
 
+
 	while (!disp.is_closed() && continuer)
 	{
 		bool moved;

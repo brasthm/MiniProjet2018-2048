@@ -36,6 +36,8 @@ class Grille
 		bool deplacement(Direction dir, int &score);
 		// Affiche le tableau
 		void afficher(cimg_library::CImg<unsigned char> &scene);
+		// Ajoute des images blocs au cas ou l'on depasse la valeur maximale
+		void addBlocs();
 		// Créer de nouveau blocs dans la grille
 		void create();
 		// Recherche toute les instersections libles

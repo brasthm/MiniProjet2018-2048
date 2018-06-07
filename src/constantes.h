@@ -17,7 +17,7 @@ constexpr size_t ECRAN_H = 600;
 constexpr size_t BLOC_W = 100;
 constexpr size_t BLOC_H = 100;
 
-constexpr size_t VALEUR_MAX = 2048;
+constexpr size_t VALEUR_MAX = 16;
 
 // Couleurs
 constexpr unsigned char NOIR[3] = { 0, 0, 0 };

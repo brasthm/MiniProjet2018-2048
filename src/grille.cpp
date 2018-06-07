@@ -91,7 +91,7 @@ Grille::Grille()
 	for (size_t i = 0; i < log2(VALEUR_MAX); i++)
 	{
 		char c[3]; //initialisation des couleurs des blocs
-		HSV2RGB(c, 2*i*360./log2(VALEUR_MAX), 1, 0.7); //color
+		HSV2RGB(c, 2*i*360./7, 1, 0.7); //color
 		img_blocs_.emplace_back(1, 1, 1, 3, c[0], c[1], c[2]); //création d'un pixel
 
 		cimg_library::CImg<unsigned char> imgtext; //création d'un texte tampon pour connaitre la largeur du bloc
@@ -273,10 +273,44 @@ void Grille::afficher(cimg_library::CImg<unsigned char>& scene)
 		for (size_t j = 0; j < TAILLE; j++)
 		{
 			// Si la case n'est pas vide
-			if(grille_[i][j] != 0)
+			if (grille_[i][j] != 0)
+			{
+				int val = (int)log2(grille_[i][j]) - 1;
+
+				while (val >= img_blocs_.size())
+					addBlocs();
+
 				// Affichage à la bonne position du bloc correscpondant
-				scene.draw_image(pos_x_ + i * BLOC_W + 1, pos_y_ + j * BLOC_H + 1, img_blocs_[(int)log2(grille_[i][j]) - 1]);
+				scene.draw_image(pos_x_ + i * BLOC_W + 1, pos_y_ + j * BLOC_H + 1, img_blocs_[val]);
+
+			}
+				
 		}
+	}
+}
+
+/*
+Auteur : Cyril Li
+Description : Création de blocs supplémentaire
+Paramètres : /
+Retour : /
+*/
+void Grille::addBlocs()
+{
+	int size = img_blocs_.size();
+	for (size_t i = size; i < 2*size; i++)
+	{
+		char c[3]; //initialisation des couleurs des blocs
+		HSV2RGB(c, 2 * i*360. / 7, 1, 0.7); //color
+		img_blocs_.emplace_back(1, 1, 1, 3, c[0], c[1], c[2]); //création d'un pixel
+
+		cimg_library::CImg<unsigned char> imgtext; //création d'un texte tampon pour connaitre la largeur du bloc
+		imgtext.draw_text(0, 0, "%d", BLANC, 0, 1, 50, (int)pow(2, i + 1)); // Position du texte à l'intérieur des blocs
+
+
+		img_blocs_.back().resize(BLOC_W - 1, BLOC_H - 1); //Agrandissement de l'image (ajout de pixel) 
+														  //recentrage du texte grâce aux infos récoltées
+		img_blocs_.back().draw_text(BLOC_W / 2 - imgtext.width() / 2, BLOC_W / 2 - imgtext.height() / 2, "%d", BLANC, c, 1, 50, (int)pow(2, i + 1));
 	}
 }
 
