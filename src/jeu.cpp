@@ -25,6 +25,7 @@ Retour : /
 void Jeu::executer()
 {
 	bool continuer = true;
+	bool victoire = false;
 
 	// Creation de l'image affiché dans la fenetre
 	cimg_library::CImg<unsigned char> scene(ECRAN_W, ECRAN_H, 1, 3, 255);
@@ -84,10 +85,10 @@ void Jeu::executer()
 			init();
 		}
 
-		if (grille_.testVictoire())
+		if (!victoire && grille_.testVictoire())
 		{
 			continuer = endDisplay("Victoire", scene, disp);
-			init();
+			victoire = true;
 		}
 		
 		scene.draw_text(0, 0, "Score : %d", NOIR, 0, 1, 50, score_); // Affichage score
