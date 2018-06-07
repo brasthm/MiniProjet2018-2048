@@ -92,7 +92,7 @@ void Jeu::executer()
 		
 		scene.draw_text(0, 0, "Score : %d", NOIR, 0, 1, 50, score_); // Affichage score
 		scene.draw_text(0, 580, "Appuyer sur R pour commencer une nouvelle partie", NOIR, 0, 1, 20); // Affichage score
-		scene.draw_text(530, 0, "Highscore : %d", NOIR, 0, 1, 40, score_ > highscore_ ? score_ : highscore_); // Affichage score
+		scene.draw_text(510, 0, "Highscore : %d", NOIR, 0, 1, 40, score_ > highscore_ ? score_ : highscore_); // Affichage score
 
 		//disp.wait();
 		if (disp.is_resized()) disp.resize();
@@ -219,7 +219,8 @@ void Jeu::saveScore()
 		}
 	}
 }
-//Je sais pas, j'ai l'impression que ya doublon
+// Lire les highscores Adrien LEBRON
+
 void Jeu::readHighscore()
 {
 	std::ifstream high;
@@ -268,7 +269,7 @@ void Jeu::drawHighscore(cimg_library::CImg<unsigned char> &scene)
 	while (i < 3 && i < highscore.size())
 	{
 		imgtext.clear();
-		imgtext.draw_text(0, 0, "%d - %d", BLANC, 0, 1, 75, i+1, highscore[i]);// Affichage score
+		imgtext.draw_text(0, 0, "%d - %d", BLANC, 0, 1, 70, i+1, highscore[i]);// Affichage score
 		scene.draw_text((ECRAN_W - imgtext.width()) / 2, 300 + 75*i, "%d - %d", BLANC, 0, 1, 75, i + 1, highscore[i]);
 		i++;
 	}
